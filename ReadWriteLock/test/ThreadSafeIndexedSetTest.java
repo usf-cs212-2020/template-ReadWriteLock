@@ -145,6 +145,9 @@ public class ThreadSafeIndexedSetTest {
     ThreadSafeIndexedSet<Integer> actual = new ThreadSafeIndexedSet<>();
     ArrayList<Thread> workers = new ArrayList<>();
 
+    // Make sure the set has at least one element before threads start
+    actual.add(42);
+
     workers.add(new AddWorker(actual, 0, num));
     workers.get(0).setPriority(Thread.MAX_PRIORITY);
 
@@ -175,6 +178,9 @@ public class ThreadSafeIndexedSetTest {
     ThreadSafeIndexedSet<Integer> actual = new ThreadSafeIndexedSet<>();
     ArrayList<Thread> workers = new ArrayList<>();
 
+    // Make sure the set has at least one element before threads start
+    actual.add(42);
+
     for (int i = 0; i < last; i++) {
       workers.add(new AddWorker(actual, i * chunk, i * chunk + chunk));
       workers.add(new GetWorker(actual, chunk));
@@ -202,6 +208,9 @@ public class ThreadSafeIndexedSetTest {
     TreeSet<Integer> expected = generate(0, num, TreeSet::new);
     ThreadSafeIndexedSet<Integer> actual = new ThreadSafeIndexedSet<>();
     ArrayList<Thread> workers = new ArrayList<>();
+
+    // Make sure the set has at least one element before threads start
+    actual.add(42);
 
     workers.add(new AddWorker(actual, 0, num / 2));
     workers.add(new CopyWorker(actual));
